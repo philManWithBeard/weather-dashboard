@@ -80,3 +80,44 @@ searchButtonEl.on("click", function (event) {
     fetchData(searchInputEl.val());
   }
 });
+
+// Function to retrieve forecast data
+const fetchData = (cityName) => {
+  // builds the query
+  const locationQuery = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${apiKey}`;
+
+  // Promise to query openweathermap geo and return json
+  fetch(locationQuery)
+    // Promise to parse json to a javascript object
+    .then((response) => response.json())
+    // Promise to call a second api
+    .then((locationData) => {
+      // Validate the first api call. If it returns an empty array then alert the user and return
+      if (locationData.length === 0) {
+        alert("Error: City has not been found");
+        return;
+      }
+
+      // Call the set data function to save the city name
+      setData(cityName);
+
+      // Set variables to use in the 2nd api call
+      const lat = locationData[0].lat;
+      const lon = locationData[0].lon;
+
+      // builds the query
+      const weatherQuery = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
+
+      // Promise to query openweathermap forecast and return json
+      fetch(weatherQuery)
+        // Promise to parse json to a javascript object
+        .then((response) => response.json())
+        // Promise to call the presentWeather function using the javascript object as a parameter. Also  call the getData function to refresh the list of city buttons
+        .then((weatherData) => {
+          presentWeather(weatherData);
+          getData();
+        });
+    })
+    // console any errors returned
+    .catch(console.error);
+};

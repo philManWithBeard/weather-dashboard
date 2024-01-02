@@ -122,7 +122,7 @@ const fetchData = (cityName) => {
     .catch(console.error);
 };
 
-/ Display the weather in the browser
+// Display the weather in the browser
 const presentWeather = (weatherData) => {
   // Reset any previous results
   todayEl.empty();

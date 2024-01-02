@@ -174,3 +174,6 @@ const presentWeather = (weatherData) => {
   // Append the results to the section
   forecastEl.append(fiveDayEl);
 };
+
+// Call the getData function to display 'previous search' buttons
+getData();

@@ -32,3 +32,25 @@ let setData = (city) => {
   data = JSON.stringify(data);
   localStorage.setItem("cityList", data);
 };
+
+// Handler for getting data
+let getData = () => {
+  // Get data from localstorage
+  let data = JSON.parse(localStorage.getItem("cityList"));
+
+  // If there's no data then create an empty array
+  if (!data) {
+    data = [];
+  }
+
+  // Create buttons for each saved entry
+  historyEl.empty();
+  data.forEach((city) => {
+    historyEl.append(
+      `<button type="submit" class="mt-2 btn-secondary" >${city}</button>`
+    );
+  });
+
+  // Return the data that we've got
+  return data;
+};

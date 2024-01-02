@@ -177,3 +177,10 @@ const presentWeather = (weatherData) => {
 
 // Call the getData function to display 'previous search' buttons
 getData();
+
+// Call the fetchData function when a user clicks on a 'previous search' button
+historyEl.on("click", "button", function (event) {
+  event.preventDefault();
+  event.stopPropagation();
+  fetchData($(event.target).text());
+});

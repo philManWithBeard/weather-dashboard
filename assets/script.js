@@ -121,3 +121,56 @@ const fetchData = (cityName) => {
     // console any errors returned
     .catch(console.error);
 };
+
+/ Display the weather in the browser
+const presentWeather = (weatherData) => {
+  // Reset any previous results
+  todayEl.empty();
+  forecastEl.empty();
+
+  // What is the forecast for now
+  const now = weatherData.list[0];
+
+  // Display the forecast for now
+  todayEl
+    .addClass("border border-dark p-2")
+    .append(
+      `<h2 class="p-0">${weatherData.city.name} (${dayjs(now.dt_txt).format(
+        "DD/MM/YYYY"
+      )})<img src="https://openweathermap.org/img/wn/${
+        now.weather[0].icon
+      }@2x.png" height="50px" alt="${now.weather[0].main} emoji"></h2>`,
+      `<p>Temp: ${now.main.temp}°C</p>`,
+      `<p>Wind: ${now.wind.speed} KPH</p>`,
+      `<p>Humidiity: ${now.main.humidity}°C</p>`
+    );
+
+  // Filter the data so that it only shows 5 days worth (40 results divided by 8)
+  const fiveDays = weatherData.list.filter(
+    (day, index) => (index + 1) % 8 === 0
+  );
+
+  // Create a div to hold the results
+  const fiveDayEl = $(`<div class="fiveDayContainer">`);
+
+  // Iterate over the 5 day forecast and append them to the five day container div
+  fiveDays.forEach((day) => {
+    const forecastContain = $(
+      `<div class="forecastContainer p-3 bg-dark">`
+    ).append(
+      `<h5 class="">${dayjs(day.dt_txt).format("DD/MM/YYYY")}</h5>`,
+      `<img src="https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png" height="50px" alt="${day.weather[0].main} emoji">`,
+      `<p>Temp: ${day.main.temp}°C</p>`,
+      `<p>Wind: ${day.wind.speed} KPH</p>`,
+      `<p>Humidiity: ${day.main.humidity}°C</p>`
+    );
+
+    fiveDayEl.append(forecastContain);
+  });
+
+  // Append section title
+  forecastEl.append("<h3>5-Day Forecast:</h3>");
+
+  // Append the results to the section
+  forecastEl.append(fiveDayEl);
+};

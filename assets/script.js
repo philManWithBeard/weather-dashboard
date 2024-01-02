@@ -54,3 +54,29 @@ let getData = () => {
   // Return the data that we've got
   return data;
 };
+
+// Validate input when the user clicks the search button
+searchButtonEl.on("click", function (event) {
+  // prevent the default button behaviour
+  event.preventDefault();
+
+  // Validate whether the user has entered anything
+  if (searchInputEl.val() < 1) {
+    alert("Error: Enter A City Name");
+  }
+
+  // Validate whether the user has entered letters or whitespace
+  else if (!searchInputEl.val().match(/^[A-Za-z\s]*$/)) {
+    alert("Error: City name can only contain letters");
+  }
+
+  // Validate whether the user has entered too much whitespace
+  else if (searchInputEl.val().match(/\s{2,}/)) {
+    alert("Error: City name has too many spaces");
+  }
+
+  // If it passes all validation tests then call the fetchData function, passing the user input in as a parameter
+  else {
+    fetchData(searchInputEl.val());
+  }
+});

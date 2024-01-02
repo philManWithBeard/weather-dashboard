@@ -1,0 +1,13 @@
+.forecastContainer {
+    color: white;
+}
+
+.fiveDayContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+#forecast {
+    display: block;
+}

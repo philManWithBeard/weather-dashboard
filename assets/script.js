@@ -45,6 +45,12 @@ let getData = () => {
 
   // Create buttons for each saved entry
   historyEl.empty();
+
+  // Dynamically add line between Search and Search Buttons
+  if (data.length > 0) {
+    historyEl.addClass("border-top border-dark pt-2");
+  }
+
   data.forEach((city) => {
     historyEl.append(
       `<button type="submit" class="mt-2 btn-secondary" >${city}</button>`
